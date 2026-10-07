@@ -70,6 +70,20 @@ When the build finishes, open the link it prints on your phone, download the APK
 
 > **Expo Go won't do push notifications.** Expo Go is the ready-made app from the Play Store. Since SDK 53 it can't receive push notifications on Android, so use one of the builds above.
 
+### Or build the APK on your own computer (no Expo account)
+
+This needs the Android SDK (easiest: install Android Studio) and Java 17.
+
+```bash
+ALLOW_HTTP=true npx expo prebuild -p android     # generates the android/ folder from app.config.js
+cd android
+./gradlew assembleRelease                         # takes ~10 minutes the first time
+```
+
+The APK is saved to `android/app/build/outputs/apk/release/app-release.apk`.
+- It's signed with a test key, which is fine for installing directly on phones but not for the Play Store.
+- To build only for 64-bit phones (faster and smaller), add `-PreactNativeArchitectures=arm64-v8a`.
+
 ## 4. Turn on push notifications
 
 Android notifications are delivered by Google's Firebase. Expo sends them for you, but it needs your Firebase details once:

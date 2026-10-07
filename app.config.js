@@ -23,6 +23,13 @@ module.exports = {
         backgroundImage: './assets/android-icon-background.png',
         monochromeImage: './assets/android-icon-monochrome.png',
       },
+      // Libraries ask for these by default, but the app never uses them - keep the install prompt short.
+      blockedPermissions: [
+        'android.permission.RECORD_AUDIO',
+        'android.permission.SYSTEM_ALERT_WINDOW',
+        'android.permission.USE_BIOMETRIC',
+        'android.permission.USE_FINGERPRINT',
+      ],
       // Needed for push notifications on Android (downloaded from your Firebase project - see README.md).
       ...(process.env.GOOGLE_SERVICES_JSON ? { googleServicesFile: process.env.GOOGLE_SERVICES_JSON } : {}),
     },
@@ -46,6 +53,7 @@ module.exports = {
         {
           photosPermission: 'Kamsar o Bar needs your photos so you can add them to your posts.',
           cameraPermission: 'Kamsar o Bar uses the camera so you can take photos for your posts.',
+          microphonePermission: false,
         },
       ],
       [
