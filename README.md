@@ -1,6 +1,12 @@
 # Kamsar o Bar: mobile app (Android & iOS)
 
-A React Native app built with **Expo SDK 57**. It talks to the same Spring Boot backend as the website.
+The Kamsar o Bar community app. It's a React Native app built with Expo.
+
+**Backend and website:** [pycharm0422/kamsarobar](https://github.com/pycharm0422/kamsarobar). The app needs that backend running (locally or hosted) to work.
+
+<img src="docs/screenshots/02-posts.png" width="200" alt="Posts"> <img src="docs/screenshots/04-my-events.png" width="200" alt="My events"> <img src="docs/screenshots/06-find.png" width="200" alt="Find a referral"> <img src="docs/screenshots/09-notification-settings.png" width="200" alt="Notification settings">
+
+It's built on **Expo SDK 57** and talks to the same Spring Boot backend as the website.
 
 | Area | What's in the app |
 |---|---|
@@ -21,10 +27,11 @@ The website is already React and JavaScript, so the app reuses the same API call
 
 ## 1. Set up
 
-You need **Node.js 20.19+ or 22+**.
+You need **Node.js 20.19+ or 22+**, and the [backend](https://github.com/pycharm0422/kamsarobar) running somewhere the phone can reach.
 
 ```bash
-cd mobile
+git clone https://github.com/pycharm0422/kamsarobar-mobile.git
+cd kamsarobar-mobile
 npm install
 cp .env.example .env
 ```
@@ -68,14 +75,14 @@ When the build finishes, open the link it prints on your phone, download the APK
 Android notifications are delivered by Google's Firebase. Expo sends them for you, but it needs your Firebase details once:
 
 1. Go to <https://console.firebase.google.com> and create a project. It's free.
-2. **Add an Android app** with the package name **`com.kamsarobar.app`**. Download **`google-services.json`** and put it in the `mobile/` folder. Keep `GOOGLE_SERVICES_JSON=./google-services.json` in `.env`.
+2. **Add an Android app** with the package name **`com.kamsarobar.app`**. Download **`google-services.json`** and put it in the project folder. Keep `GOOGLE_SERVICES_JSON=./google-services.json` in `.env`.
 3. In Firebase, go to **Project settings → Service accounts → Generate new private key**. This downloads a JSON key file.
 4. Run `npx eas-cli@latest credentials`, then choose **Android → your build profile → Google Service Account → FCM V1** and upload that JSON key.
 5. Build again (step 3). When you log in, the app asks permission to send notifications. After that, new posts and events arrive as notifications.
 
 Expo's own guide has screenshots of these steps: <https://docs.expo.dev/push-notifications/fcm-credentials/>
 
-**On the server:** the backend sends notifications through Expo's push service, so it needs outgoing internet access to `exp.host`. Set `PUSH_PROVIDER=log` if you only want them written to the log, for example on a computer with no internet.
+**On the server:** the [backend](https://github.com/pycharm0422/kamsarobar) sends notifications through Expo's push service, so it needs outgoing internet access to `exp.host`. Set `PUSH_PROVIDER=log` if you only want them written to the log, for example on a computer with no internet. The backend's notification API is described in its [docs/API.md](https://github.com/pycharm0422/kamsarobar/blob/main/docs/API.md#push-notifications-mobile-app).
 
 **Who gets what:**
 
@@ -103,7 +110,7 @@ A Google Play developer account costs a one-time USD 25.
 ## Code layout
 
 ```
-mobile/
+kamsarobar-mobile/
 ├── app.config.js          app name, icons, permissions, plugins (reads .env)
 ├── eas.json               cloud build profiles: development / preview (APK) / production
 └── src/
