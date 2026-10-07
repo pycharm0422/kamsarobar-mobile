@@ -69,7 +69,13 @@ module.exports = {
         'expo-build-properties',
         {
           // Plain http:// is only for testing against a computer on your Wi-Fi. Production uses https.
-          android: { usesCleartextTraffic: allowHttp },
+          android: {
+            usesCleartextTraffic: allowHttp,
+            // Smaller download: strip unused code/resources and compress native libraries inside the APK.
+            enableMinifyInReleaseBuilds: true,
+            enableShrinkResourcesInReleaseBuilds: true,
+            useLegacyPackaging: true,
+          },
         },
       ],
     ],
