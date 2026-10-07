@@ -23,7 +23,7 @@ module.exports = {
         backgroundImage: './assets/android-icon-background.png',
         monochromeImage: './assets/android-icon-monochrome.png',
       },
-      // Needed for push notifications on Android (downloaded from your Firebase project - see mobile/README.md).
+      // Needed for push notifications on Android (downloaded from your Firebase project - see README.md).
       ...(process.env.GOOGLE_SERVICES_JSON ? { googleServicesFile: process.env.GOOGLE_SERVICES_JSON } : {}),
     },
     web: {

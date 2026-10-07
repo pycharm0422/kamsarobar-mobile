@@ -38,7 +38,7 @@ export async function getPushToken() {
   if (status !== 'granted') return null;
   const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId;
   if (!projectId) {
-    console.warn('Push notifications need an EAS project id (run `npx eas-cli@latest init`). See mobile/README.md.');
+    console.warn('Push notifications need an EAS project id (run `npx eas-cli@latest init`). See README.md.');
     return null;
   }
   try {
