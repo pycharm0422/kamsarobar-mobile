@@ -78,6 +78,7 @@ function BasicForm() {
   const { user, setUser } = useAuth();
   const [form, setForm] = useState({ name: user.name, mobile: `+${user.mobile}`, cityId: String(user.city.id) });
   const [msg, setMsg] = useState({});
+  const isCityAdmin = user.role === 'CITY_ADMIN';
   const save = async () => {
     setMsg({});
     try {
@@ -93,7 +94,12 @@ function BasicForm() {
       <SuccessBanner message={msg.ok} />
       <Field label="Full name" value={form.name} onChangeText={(name) => setForm({ ...form, name })} />
       <Field label="Mobile number (WhatsApp)" value={form.mobile} keyboardType="phone-pad" onChangeText={(mobile) => setForm({ ...form, mobile })} />
-      <CityPicker label="City" value={form.cityId} onChange={(cityId) => setForm({ ...form, cityId })} />
+      <CityPicker label="City" value={form.cityId} onChange={(cityId) => setForm({ ...form, cityId })} disabled={isCityAdmin} />
+      {isCityAdmin ? (
+        <Text style={[common.muted, { marginTop: -4, marginBottom: 12 }]}>
+          You are the admin of {user.managedCity?.name}, so only the main admin can change your city.
+        </Text>
+      ) : null}
       <Button title="Save" onPress={save} />
     </Card>
   );

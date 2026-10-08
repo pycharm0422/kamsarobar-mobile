@@ -4,18 +4,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, common } from '../theme';
 
 /** A tap-to-choose field that opens a full list (React Native has no built-in dropdown). */
-export default function OptionPicker({ label, value, options, onChange, placeholder = 'Choose…', compact }) {
+export default function OptionPicker({ label, value, options, onChange, placeholder = 'Choose…', compact, disabled }) {
   const [open, setOpen] = useState(false);
   const selected = options.find((o) => String(o.value) === String(value ?? ''));
   return (
     <View style={!compact && { marginBottom: 12, gap: 6 }}>
       {label ? <Text style={styles.label}>{label}</Text> : null}
-      <Pressable style={[styles.field, compact && styles.compact]} onPress={() => setOpen(true)}
-        accessibilityRole="button" accessibilityLabel={label || placeholder}>
-        <Text style={[common.text, !selected && { color: '#9ca3af' }]} numberOfLines={1}>
+      <Pressable style={[styles.field, compact && styles.compact, disabled && styles.disabled]} onPress={() => setOpen(true)}
+        disabled={disabled} accessibilityRole="button" accessibilityLabel={label || placeholder} accessibilityState={{ disabled: !!disabled }}>
+        <Text style={[common.text, !selected && { color: '#9ca3af' }, disabled && { color: colors.muted }]} numberOfLines={1}>
           {selected ? selected.label : placeholder}
         </Text>
-        <Text style={common.muted}>▾</Text>
+        {disabled ? null : <Text style={common.muted}>▾</Text>}
       </Pressable>
       <Modal visible={open} animationType="slide" onRequestClose={() => setOpen(false)}>
         <SafeAreaView style={common.screen}>
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: '#d1d5db', borderRadius: 12, paddingHorizontal: 12, paddingVertical: 12, backgroundColor: '#fff',
   },
   compact: { paddingVertical: 8 },
+  disabled: { backgroundColor: '#f3f4f6' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16 },
   close: { color: colors.primary, fontWeight: '700', fontSize: 16 },
   option: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 15, paddingHorizontal: 18, borderBottomWidth: 1, borderBottomColor: colors.border, backgroundColor: '#fff' },
