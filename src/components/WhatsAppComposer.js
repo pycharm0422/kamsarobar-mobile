@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Linking, Modal, Platform, Text, View } from 'react-native';
+import { Linking, Modal, Text, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { common } from '../theme';
 import { whatsappLink } from '../utils/links';
@@ -13,7 +14,7 @@ export default function WhatsAppComposer({ member, initialMessage, onClose }) {
   return (
     <Modal visible animationType="slide" onRequestClose={onClose}>
       <SafeAreaView style={common.screen}>
-        <KeyboardAvoidingView style={[common.content, { flex: 1 }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <KeyboardAvoidingView style={[common.content, { flex: 1 }]} behavior="padding" automaticOffset>
           <Text style={common.h2}>Message {member.name}</Text>
           <Text style={[common.muted, { marginBottom: 10 }]}>Edit the message if you like, then open WhatsApp.</Text>
           <Field value={message} onChangeText={setMessage} multiline style={{ flex: 1 }} label="Message" />

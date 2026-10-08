@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { postApi } from '../../api';
 import PostCard, { confirm } from '../../components/PostCard';
 import { Button, ErrorBanner, Loading } from '../../components/ui';
@@ -28,10 +29,11 @@ export default function PostScreen() {
   if (!post) return error ? <View style={common.content}><ErrorBanner message={error} /></View> : <Loading />;
 
   return (
-    <KeyboardAvoidingView style={common.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined} keyboardVerticalOffset={90}>
+    <KeyboardAvoidingView style={common.screen} behavior="padding" automaticOffset>
       <FlatList
         data={comments}
         keyExtractor={(c) => String(c.id)}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={common.content}
         ListHeaderComponent={
           <>

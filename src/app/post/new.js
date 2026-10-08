@@ -2,10 +2,11 @@ import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { imageUrl, postApi, uploadImage } from '../../api';
 import { useAuth } from '../../auth/AuthContext';
 import DateTimeField from '../../components/DateTimeField';
+import FormScroll from '../../components/FormScroll';
 import OptionPicker from '../../components/OptionPicker';
 import { Button, ChoiceChip, ErrorBanner, Field, Loading } from '../../components/ui';
 import { colors, common } from '../../theme';
@@ -92,8 +93,7 @@ export default function PostComposer() {
   if (!loaded) return error ? <ErrorBanner message={error} /> : <Loading />;
 
   return (
-    <KeyboardAvoidingView style={common.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={common.content} keyboardShouldPersistTaps="handled">
+    <FormScroll style={common.screen} contentContainerStyle={common.content}>
         <ErrorBanner message={error} onClose={() => setError('')} />
         <OptionPicker label="What are you posting?" value={form.category} options={CATEGORIES} onChange={set('category')} />
         <Field label={isEvent ? 'Title' : 'Title (optional)'} value={form.title} onChangeText={set('title')}
@@ -139,8 +139,7 @@ export default function PostComposer() {
         </View>
 
         <Button style={{ marginTop: 12 }} title={uploading ? 'Uploading photos…' : id ? 'Save' : 'Post'} onPress={submit} busy={busy} disabled={uploading > 0} />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </FormScroll>
   );
 }
 

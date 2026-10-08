@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Switch, Text, View } from 'react-native';
+import { Switch, Text, View } from 'react-native';
 import { profileApi, userApi } from '../../api';
 import { useAuth } from '../../auth/AuthContext';
 import CityPicker from '../../components/CityPicker';
+import FormScroll from '../../components/FormScroll';
 import TagInput from '../../components/TagInput';
 import { Button, Card, ErrorBanner, Field, Loading, Segmented, SuccessBanner } from '../../components/ui';
 import { colors, common } from '../../theme';
@@ -11,13 +12,11 @@ import { errorMessage } from '../../utils/errors';
 export default function EditProfileScreen() {
   const [tab, setTab] = useState('work');
   return (
-    <KeyboardAvoidingView style={common.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={common.content} keyboardShouldPersistTaps="handled">
+    <FormScroll style={common.screen} contentContainerStyle={common.content}>
         <Segmented value={tab} onChange={setTab}
           options={[{ value: 'work', label: 'Work & referrals' }, { value: 'basic', label: 'Basic' }, { value: 'password', label: 'Password' }]} />
         {tab === 'work' ? <WorkForm /> : tab === 'basic' ? <BasicForm /> : <PasswordForm />}
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </FormScroll>
   );
 }
 

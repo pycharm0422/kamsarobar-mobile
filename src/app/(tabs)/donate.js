@@ -1,9 +1,10 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Linking, Platform, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Linking, Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { cityApi, donationApi } from '../../api';
 import { useAuth } from '../../auth/AuthContext';
 import CityPicker from '../../components/CityPicker';
+import FormScroll from '../../components/FormScroll';
 import OptionPicker from '../../components/OptionPicker';
 import { Badge, Button, Card, ChoiceChip, ErrorBanner, Field, SuccessBanner } from '../../components/ui';
 import { colors, common } from '../../theme';
@@ -49,7 +50,7 @@ export default function DonateScreen() {
 
   const bank = city?.bank;
   return (
-    <ScrollView style={common.screen} contentContainerStyle={common.content} keyboardShouldPersistTaps="handled">
+    <FormScroll style={common.screen} contentContainerStyle={common.content}>
       <Card>
         <Text style={common.small}>{cityId === myCity ? 'Your city' : 'Showing'}</Text>
         <Text style={common.h1}>{fund?.cityName || city?.name || '…'}</Text>
@@ -117,7 +118,7 @@ export default function DonateScreen() {
           </View>
         ))}
       </Card>
-    </ScrollView>
+    </FormScroll>
   );
 }
 

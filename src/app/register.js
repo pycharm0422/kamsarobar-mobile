@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text } from 'react-native';
+import { Text } from 'react-native';
 import { useAuth } from '../auth/AuthContext';
 import CityPicker from '../components/CityPicker';
+import FormScroll from '../components/FormScroll';
 import { Button, Card, ErrorBanner, Field } from '../components/ui';
 import { common } from '../theme';
 import { errorMessage } from '../utils/errors';
@@ -32,8 +33,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={common.screen} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={common.content} keyboardShouldPersistTaps="handled">
+    <FormScroll style={common.screen} contentContainerStyle={common.content}>
         <Card>
           <Text style={common.h2}>Step 1 of 2 · the basics</Text>
           <Text style={[common.muted, { marginBottom: 12 }]}>You can add your work details right after.</Text>
@@ -46,7 +46,6 @@ export default function RegisterScreen() {
             hint="At least 6 characters" />
           <Button title="Create account" onPress={submit} busy={busy} />
         </Card>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    </FormScroll>
   );
 }
