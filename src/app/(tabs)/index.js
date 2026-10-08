@@ -84,7 +84,7 @@ export default function PostsScreen() {
                 <Text style={common.muted}>What's on your mind? Share news, photos, a job, a seminar…</Text>
               </Pressable>
               {otherCity ? (
-                <Text style={styles.note}>Showing posts from this city that are shared with everyone. City-only posts are not shown.</Text>
+                <Text style={styles.note}>Showing this city's posts that are shared with everyone, plus posts for all cities. City-only posts are not shown.</Text>
               ) : null}
             </>
           }
